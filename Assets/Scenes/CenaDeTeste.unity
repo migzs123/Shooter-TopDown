@@ -224,6 +224,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 170424540}
+  crosshair: {fileID: 170424541}
+  weapon: {fileID: 600363188}
   moveSpeed: 5
 --- !u!61 &170424539
 BoxCollider2D:
