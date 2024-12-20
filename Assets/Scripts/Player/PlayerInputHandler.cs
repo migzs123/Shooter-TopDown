@@ -1,32 +1,39 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerInputHandler : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private CrosshairHandler crosshair;
+    [SerializeField] private WeaponHandler weapon;
+
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpPower = 5f;
 
     private float moveInputX;
     private float moveInputY;
 
-    private bool isGrounded;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Update()
     {
-        rb = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetMouseButtonDown(0))
         {
-            rb.AddForce(new Vector2(0f, jumpPower), ForceMode2D.Impulse);
+            weapon.Fire();
         }
     }
 
+
     void FixedUpdate()
+    {
+        getMovementInput();
+
+        // Atualiza a velocidade
+        rb.velocity = new Vector2(moveInputX * moveSpeed, moveInputY * moveSpeed);
+
+        // Atualiza o angulo
+        rb.rotation = crosshair.angle;
+    }
+
+
+    void getMovementInput()
     {
         // Movimento Horizontal
         moveInputX = 0f;
@@ -40,7 +47,6 @@ public class PlayerMovement : MonoBehaviour
             moveInputX = -1f;
         }
 
-
         // Movimento Vertical
         moveInputY = 0f;
 
@@ -52,11 +58,6 @@ public class PlayerMovement : MonoBehaviour
         {
             moveInputY = -1f;
         }
-
-        // Atualiza a velocidade
-        rb.velocity = new Vector2(moveInputX * moveSpeed, moveInputY * moveSpeed);
-
-        // Inverte o jogador dependendo da direção
     }
 
 }
