@@ -4,8 +4,20 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    private float damage = 1f;
+
     private void OnBecameInvisible()
     {
         Destroy(gameObject); // Destrói o objeto quando ele sair da tela
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Enemy"))
+        {
+            collision.gameObject.GetComponent<EnemyController>().Hit(damage);
+            Destroy(gameObject);
+        }
+    }
+ 
 }
