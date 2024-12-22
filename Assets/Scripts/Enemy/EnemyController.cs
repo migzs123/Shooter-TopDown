@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
         slider.value = health / maxHealth;
     }
 
-    public void Hit(float damage){
+    public void TakeDamage(float damage){
         health-= damage;
         UpdateHealthBar();
         if (health <= 0)
