@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 73967719}
   - component: {fileID: 73967721}
   - component: {fileID: 73967720}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +348,7 @@ Transform:
   m_GameObject: {fileID: 170424535}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -700,7 +700,8 @@ GameObject:
   - component: {fileID: 567362995}
   - component: {fileID: 567362994}
   - component: {fileID: 567362998}
-  m_Layer: 7
+  - component: {fileID: 567362999}
+  m_Layer: 3
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -736,7 +737,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -778,7 +779,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &567362996
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -840,7 +841,7 @@ Transform:
   m_GameObject: {fileID: 567362993}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 6.8, y: 3.27, z: 0}
+  m_LocalPosition: {x: 6.8, y: 3.27, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -862,6 +863,20 @@ MonoBehaviour:
   slider: {fileID: 2141483841}
   maxHealth: 4
   health: 4
+--- !u!114 &567362999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 567362993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b2f6cd8c342c5749a594726840ab4ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 170424537}
+  speed: 2
 --- !u!1 &600363185
 GameObject:
   m_ObjectHideFlags: 0
@@ -973,7 +988,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 660675065}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1012,7 +1027,7 @@ GameObject:
   - component: {fileID: 1053744953}
   - component: {fileID: 1053744952}
   - component: {fileID: 1053744951}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1113,7 +1128,7 @@ GameObject:
   - component: {fileID: 1119456402}
   - component: {fileID: 1119456404}
   - component: {fileID: 1119456403}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1289,7 +1304,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2141483840}
   - component: {fileID: 2141483841}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
