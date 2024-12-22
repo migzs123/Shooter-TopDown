@@ -1,28 +1,59 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-
     public GameObject bulletPrefab;
     public Transform firePoint;
 
     public float fireForce = 20f;
 
-    public float cooldownTime = 0.5f; // Tempo de cooldown em segundos
+    private float baseCooldownTime = 0.5f; // Cooldown base em segundos
+    private float cooldownTime; // Cooldown atual
     private bool canFire = true; // Controle para saber se o jogador pode atirar
+
+    public PowerUpsManager powerUpsManager;
+
+    private void Start()
+    {
+
+        if (powerUpsManager == null)
+        {
+            Debug.LogError("PowerUpsManager não encontrado no GameObject.");
+        }
+
+        cooldownTime = baseCooldownTime; // Inicializa com o valor base
+    }
+
+    private void Update()
+    {
+        // Atualiza o cooldown baseado no Power-Up ativo (se houver)
+        if (powerUpsManager != null)
+        {
+            cooldownTime = powerUpsManager.item == 1 ? 0.1f : baseCooldownTime;
+        }
+    }
 
     public void Fire()
     {
         if (canFire)
         {
+            // Instancia a bala
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
 
-            bullet.GetComponent<Rigidbody2D>().AddForce(firePoint.up * fireForce, ForceMode2D.Impulse);
+            // Aplica força à bala
+            Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                rb.AddForce(firePoint.up * fireForce, ForceMode2D.Impulse);
+            }
+            else
+            {
+                Debug.LogError("Rigidbody2D não encontrado no bulletPrefab.");
+            }
 
-            StartCoroutine(FireCooldown()); // Inicia o cooldown
+            // Inicia o cooldown
+            StartCoroutine(FireCooldown());
         }
     }
 
@@ -33,4 +64,3 @@ public class WeaponHandler : MonoBehaviour
         canFire = true; // Permite que o jogador atire novamente
     }
 }
-

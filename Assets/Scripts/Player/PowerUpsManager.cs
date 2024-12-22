@@ -53,9 +53,10 @@ public class PowerUpsManager : MonoBehaviour
 
     private void RandomizeItem()
     {
-
+        /*
         float randomNumber = Random.Range(0, 100);
         
+
 
         if (randomNumber < dropChances[0]) {
             item = 0;
@@ -72,7 +73,10 @@ public class PowerUpsManager : MonoBehaviour
         {
             item = 3;
         }
-       
+       */
+
+        item = 1;
+
     }
 
     private IEnumerator PowerDuration(float duration)
