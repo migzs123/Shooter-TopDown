@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float maxHealth = 10f;
-    private float health;
+    private float currentHealth;
 
     private SpriteRenderer rend;
     private Color hitColor = Color.red; // Cor de feedback
@@ -16,10 +16,17 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false; // Controla se o jogador está invulnerável
 
 
+    [SerializeField] private float cureAmmount = 3f;
+
+    private PowerUpsManager powerUpsManager;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        health = maxHealth;
+        powerUpsManager = GetComponent<PowerUpsManager>();
+
+        currentHealth = maxHealth;
 
 
         rend = GetComponent<SpriteRenderer>();
@@ -33,11 +40,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Heal()
+    {
+
+        if(currentHealth+ cureAmmount > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            currentHealth += cureAmmount;
+        }
+        Debug.Log("Vida atual: " + currentHealth);
+    }
+
     // Update is called once per frame
     public void TakeDamage(float damage)
     {
-        health -= damage;
-        if (health <= 0)
+        
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
             GameOver();
         }
@@ -45,6 +67,7 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(InvincibilityFrames());
         }
+        Debug.Log("Vida atual: " + currentHealth);
     }
 
     private IEnumerator InvincibilityFrames()

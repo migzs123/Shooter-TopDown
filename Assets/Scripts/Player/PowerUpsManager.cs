@@ -18,8 +18,12 @@ public class PowerUpsManager : MonoBehaviour
 
     [SerializeField] private float[] durationTime = new float[4];
 
+    private PlayerController playerController;
+
     private void Start()
     {
+        playerController = GetComponent<PlayerController>();
+
         item = -1;
 
         dropChances[0] = 45;
@@ -27,7 +31,7 @@ public class PowerUpsManager : MonoBehaviour
         dropChances[2] = 15; 
         dropChances[3] = 15;
 
-        durationTime[0] = 0.5f;
+        durationTime[0] = 0.1f;
         durationTime[1] = 15f;
         durationTime[2] = 8f;
         durationTime[3] = 8f;
@@ -35,10 +39,15 @@ public class PowerUpsManager : MonoBehaviour
 
     private void Update()
     {
-        
+
         if (item >= 0)
         {
             //Debug.Log(item);
+            if (item == 0)
+            {
+                playerController.Heal();
+            }
+
             StartCoroutine(PowerDuration(durationTime[item]));
         }
     }
@@ -75,7 +84,7 @@ public class PowerUpsManager : MonoBehaviour
         }
        */
 
-        item = 1;
+        item = 0;
 
     }
 
