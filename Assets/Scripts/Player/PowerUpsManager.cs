@@ -84,7 +84,7 @@ public class PowerUpsManager : MonoBehaviour
         }
        */
 
-        item = 2;
+        item = 3;
 
     }
 

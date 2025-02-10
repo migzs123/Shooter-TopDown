@@ -30,7 +30,19 @@ public class WeaponHandler : MonoBehaviour
         // Atualiza o cooldown baseado no Power-Up ativo (se houver)
         if (powerUpsManager != null)
         {
-            cooldownTime = powerUpsManager.item == 1 ? 0.1f : baseCooldownTime;
+
+            if (powerUpsManager.item == 1)
+            {
+                cooldownTime = baseCooldownTime/5;
+            }
+            else if (powerUpsManager.item == 3)
+            {
+                cooldownTime = baseCooldownTime*2;
+            }
+            else {
+                cooldownTime = baseCooldownTime;
+            }
+
         }
     }
 
@@ -40,6 +52,12 @@ public class WeaponHandler : MonoBehaviour
         {
             // Instancia a bala
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+
+            if(powerUpsManager.item == 3)
+            {
+                bullet.GetComponent<Bullet>().explosionBullet = true;
+            }
+
 
             // Aplica força à bala
             Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
