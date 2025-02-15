@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 10f;
-    private float currentHealth;
 
-    private SpriteRenderer rend;
-    private Color hitColor = Color.red; // Cor de feedback
-    private Color originalColor; // Cor original do sprite
+    [Header("Health")]
+    [SerializeField] private float maxHealth = 10f;
+    [SerializeField] private float cureAmmount = 3f;
+    private float currentHealth;
 
     [Header("Invincibility Frames")]
     [SerializeField] private float invincibilityDuration = 1f; // Duração dos iframes
     private bool isInvincible = false; // Controla se o jogador está invulnerável
 
+    private SpriteRenderer rend;
+    private Color hitColor = Color.red; // Cor de feedback
+    private Color originalColor; // Cor original do sprite
 
-    [SerializeField] private float cureAmmount = 3f;
+    
 
     private PowerUpsManager powerUpsManager;
 

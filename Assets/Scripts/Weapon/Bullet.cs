@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    private float defaultDamage = 1f;
-    private float explosionDamage = 2f;
+    [Header("Damage")]
+    [SerializeField] private float defaultDamage = 1f;
+    [SerializeField] private float explosionDamage = 2f;
 
     public bool explosionBullet;
 
     private float explosionRadius = 2f;
-
 
     public LayerMask explosionLayer;
 
