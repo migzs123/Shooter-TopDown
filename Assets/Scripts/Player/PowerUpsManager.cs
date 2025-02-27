@@ -7,6 +7,8 @@ public class PowerUpsManager : MonoBehaviour
 
     public int item;
 
+   
+
     /* Cada item tem um codigo:
      * 0 -> Item de cura
      * 1 -> Aumento de firerate
@@ -17,6 +19,8 @@ public class PowerUpsManager : MonoBehaviour
     [SerializeField] private int[] dropChances = new int[4];
 
     [SerializeField] private float[] durationTime = new float[4];
+
+    [SerializeField] private PowerUpsUI powerUpsUI;
 
     private PlayerController playerController;
 
@@ -39,6 +43,8 @@ public class PowerUpsManager : MonoBehaviour
 
     private void Update()
     {
+
+        powerUpsUI.ChangePowerUP(item);
 
         if (item >= 0)
         {
