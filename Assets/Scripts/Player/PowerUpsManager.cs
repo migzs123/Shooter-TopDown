@@ -5,9 +5,20 @@ using UnityEngine;
 public class PowerUpsManager : MonoBehaviour
 {
 
-    public int item;
+    public class PowerUP
+    {
+        public int dropChance { get; private set; }
+        public float durationTime { get; private set; }
 
-   
+        public PowerUP(int dropChance, float durationTime)
+        {
+            this.dropChance = dropChance;
+            this.durationTime = durationTime;
+        }
+
+    }
+
+    public int item;
 
     /* Cada item tem um codigo:
      * 0 -> Item de cura
@@ -16,13 +27,12 @@ public class PowerUpsManager : MonoBehaviour
      * 3 -> Balas explosivas (dano em área)
     */
 
-    [SerializeField] private int[] dropChances = new int[4];
-
-    [SerializeField] private float[] durationTime = new float[4];
+    [SerializeField] private PowerUP[] powerUPs = new PowerUP[4];
 
     [SerializeField] private PowerUpsUI powerUpsUI;
 
     private PlayerController playerController;
+    private Coroutine powerCoroutine;
 
     private void Start()
     {
@@ -30,15 +40,11 @@ public class PowerUpsManager : MonoBehaviour
 
         item = -1;
 
-        dropChances[0] = 45;
-        dropChances[1] = 25; 
-        dropChances[2] = 15; 
-        dropChances[3] = 15;
+        powerUPs[0] = new PowerUP(35, 0.1f);
+        powerUPs[1] = new PowerUP(25, 15f);
+        powerUPs[2] = new PowerUP(20,8f);
+        powerUPs[3] = new PowerUP(20, 8f);
 
-        durationTime[0] = 0.1f;
-        durationTime[1] = 15f;
-        durationTime[2] = 8f;
-        durationTime[3] = 8f;
     }
 
     private void Update()
@@ -54,7 +60,7 @@ public class PowerUpsManager : MonoBehaviour
                 playerController.Heal();
             }
 
-            StartCoroutine(PowerDuration(durationTime[item]));
+            StartCoroutine(PowerDuration(powerUPs[item].durationTime));
         }
     }
 
@@ -68,30 +74,37 @@ public class PowerUpsManager : MonoBehaviour
 
     private void RandomizeItem()
     {
-        /*
-        float randomNumber = Random.Range(0, 100);
-        
+        float randomNumber = Random.Range(0, 100); // Gera um número aleatório entre 0 e 100.
+        int cumulativeChance = 0; // Variável para somar as chances cumulativamente.
 
-
-        if (randomNumber < dropChances[0]) {
-            item = 0;
-        }
-        else if (randomNumber < dropChances[1])
+        for (int i = 0; i < powerUPs.Length; i++) // Percorre todos os power-ups disponíveis.
         {
-            item = 1;
-        }
-        else if(randomNumber < dropChances[2])
-        {
-            item = 2;
-        }
-        else if(randomNumber < dropChances[3])
-        {
-            item = 3;
-        }
-       */
+            cumulativeChance += powerUPs[i].dropChance; //Soma a chance de drop do item atual.
 
-        item = 3;
+            if (randomNumber < cumulativeChance) // Se o número aleatório for menor que a chance acumulada...
+            {
+                ApplyPowerUp(i); // Seleciona o item correspondente.
+                return; // Sai da função imediatamente, pois já escolheu um item.
+            }
+        }
+    }
 
+    private void ApplyPowerUp(int powerUpIndex)
+    {
+        item = powerUpIndex;
+
+        if (item == 0)
+        {
+            playerController.Heal();
+        }
+
+        // Se já houver uma corrotina rodando, para antes de iniciar outra
+        if (powerCoroutine != null)
+        {
+            StopCoroutine(powerCoroutine);
+        }
+
+        powerCoroutine = StartCoroutine(PowerDuration(powerUPs[item].durationTime));
     }
 
     private IEnumerator PowerDuration(float duration)
