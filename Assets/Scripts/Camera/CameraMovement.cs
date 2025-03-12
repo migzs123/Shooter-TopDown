@@ -7,9 +7,9 @@ public class MoveCamera : MonoBehaviour
     public Transform player;
 
     [Header("Offsets")]
-    public float maxX;          // Posição max até onde vai a fase
-    public float offSetX;       // Posição em X
-    public float offSetY;     // Posição em Y 
+    [SerializeField] private float maxX = 100f;          // Posição max até onde vai a fase
+    [SerializeField] private float offSetX;       // Posição em X
+    [SerializeField] private float offSetY;     // Posição em Y 
 
     [Header("Locks")]
     [HideInInspector] public bool lockY = false;

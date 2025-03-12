@@ -6,7 +6,7 @@ using TMPro;
 public class TimerController : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI timerText;
-    public float elapsedTime;
+    [SerializeField] private float elapsedTime;
 
     private void Update()
     {
@@ -15,5 +15,10 @@ public class TimerController : MonoBehaviour
         int seconds = Mathf.FloorToInt(elapsedTime % 60);
         timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
 
+    }
+
+    public float getElapsedTime()
+    {
+           return elapsedTime;
     }
 }

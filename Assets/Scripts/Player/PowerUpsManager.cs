@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class PowerUpsManager : MonoBehaviour
 {
 
+    [System.Serializable]
     public class PowerUP
     {
-        public int dropChance { get; private set; }
+       
+        [SerializeField, Tooltip("Duração do power up (em segundos)")]
         public float durationTime { get; private set; }
+        [SerializeField, Tooltip("Chance de ativação (%)")]
+        public int dropChance { get; private set; }
 
         public PowerUP(int dropChance, float durationTime)
         {
@@ -18,7 +23,7 @@ public class PowerUpsManager : MonoBehaviour
 
     }
 
-    public int item;
+     private int item;
 
     /* Cada item tem um codigo:
      * 0 -> Item de cura
@@ -111,5 +116,10 @@ public class PowerUpsManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         item = -1;
+    }
+
+    public int getItem()
+    {
+        return this.item;
     }
 }

@@ -334,6 +334,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvas: {fileID: 1390345344}
+  eventsList:
+  - code: 0
+    duration: 0
+    chance: 0
+  - code: 0
+    duration: 0
+    chance: 0
+  - code: 0
+    duration: 0
+    chance: 0
+  - code: 0
+    duration: 0
+    chance: 0
 --- !u!1 &132286092
 GameObject:
   m_ObjectHideFlags: 0
@@ -680,7 +693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b43087c353535ac40a71643bc3bcc150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: 0
+  powerUPs: []
   powerUpsUI: {fileID: 1390345350}
 --- !u!1 &198640468
 GameObject:
@@ -1189,7 +1202,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 170424537}
-  maxX: 100
+  maxX: 0
   offSetX: 0
   offSetY: 0
   lockY: 0

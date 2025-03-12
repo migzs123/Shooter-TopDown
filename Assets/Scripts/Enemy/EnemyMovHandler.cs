@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyMovHandler : MonoBehaviour
 {
-    public Transform player; // Referência ao Transform do jogador
-    public float speed =2f;
+    [SerializeField] private Transform player; // Referência ao Transform do jogador
+    [SerializeField] private float speed =2f;
 
     // Update is called once per frame
     void Update()

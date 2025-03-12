@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
     }
 
     public void TakeDamage(float damage){
-        if (powerUpsManager.item == 2)
+        if (powerUpsManager.getItem() == 2)
         {
             damage *= 2;
         }
