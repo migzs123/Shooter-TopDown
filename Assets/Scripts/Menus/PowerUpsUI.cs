@@ -13,7 +13,7 @@ public class PowerUpsUI : MonoBehaviour
     [SerializeField] private Sprite explosionBulletsSprite;
 
 
-    public void ChangePowerUP(int code)
+    public void changePowerUP(int code)
     {
         if (code == -1 || code == 0)
         {

@@ -1,17 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class PowerUpsManager : MonoBehaviour
 {
-
     [System.Serializable]
     public class PowerUP
     {
-       
         [SerializeField, Tooltip("Duração do power up (em segundos)")]
         public float durationTime { get; private set; }
+
         [SerializeField, Tooltip("Chance de ativação (%)")]
         public int dropChance { get; private set; }
 
@@ -20,22 +18,20 @@ public class PowerUpsManager : MonoBehaviour
             this.dropChance = dropChance;
             this.durationTime = durationTime;
         }
-
     }
 
-     private int item;
+    private int item = -1;
 
-    /* Cada item tem um codigo:
+    /* Códigos dos Power-ups:
      * 0 -> Item de cura
      * 1 -> Aumento de firerate
      * 2 -> Balas de fogo (mais dano)
      * 3 -> Balas explosivas (dano em área)
     */
 
-    [SerializeField] private PowerUP[] powerUPs = new PowerUP[4];
+    [SerializeField] private List<PowerUP> powerUPs = new List<PowerUP>();
 
     [SerializeField] private PowerUpsUI powerUpsUI;
-
     private PlayerController playerController;
     private Coroutine powerCoroutine;
 
@@ -43,58 +39,48 @@ public class PowerUpsManager : MonoBehaviour
     {
         playerController = GetComponent<PlayerController>();
 
-        item = -1;
-
-        powerUPs[0] = new PowerUP(35, 0.1f);
-        powerUPs[1] = new PowerUP(25, 15f);
-        powerUPs[2] = new PowerUP(20,8f);
-        powerUPs[3] = new PowerUP(20, 8f);
-
+        // Criar a lista de power-ups dentro do Start()
+        powerUPs = new List<PowerUP>
+        {
+            new PowerUP(35, 0.1f),
+            new PowerUP(25, 15f),
+            new PowerUP(20, 8f),
+            new PowerUP(20, 8f)
+        };
     }
 
     private void Update()
     {
-
-        powerUpsUI.ChangePowerUP(item);
-
-        if (item >= 0)
-        {
-            //Debug.Log(item);
-            if (item == 0)
-            {
-                playerController.Heal();
-            }
-
-            StartCoroutine(PowerDuration(powerUPs[item].durationTime));
-        }
+        powerUpsUI.changePowerUP(item);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Power-Up") && item<0){
+        if (collision.CompareTag("Power-Up") && item < 0)
+        {
             Destroy(collision.gameObject);
-            RandomizeItem();
+            randomizeItem();
         }
     }
 
-    private void RandomizeItem()
+    private void randomizeItem()
     {
-        float randomNumber = Random.Range(0, 100); // Gera um número aleatório entre 0 e 100.
-        int cumulativeChance = 0; // Variável para somar as chances cumulativamente.
+        float randomNumber = Random.Range(0, 100);
+        int cumulativeChance = 0;
 
-        for (int i = 0; i < powerUPs.Length; i++) // Percorre todos os power-ups disponíveis.
+        for (int i = 0; i < powerUPs.Count; i++) // Alterado de .Length para .Count
         {
-            cumulativeChance += powerUPs[i].dropChance; //Soma a chance de drop do item atual.
+            cumulativeChance += powerUPs[i].dropChance;
 
-            if (randomNumber < cumulativeChance) // Se o número aleatório for menor que a chance acumulada...
+            if (randomNumber < cumulativeChance)
             {
-                ApplyPowerUp(i); // Seleciona o item correspondente.
-                return; // Sai da função imediatamente, pois já escolheu um item.
+                applyPowerUp(i);
+                return;
             }
         }
     }
 
-    private void ApplyPowerUp(int powerUpIndex)
+    private void applyPowerUp(int powerUpIndex)
     {
         item = powerUpIndex;
 
@@ -103,16 +89,16 @@ public class PowerUpsManager : MonoBehaviour
             playerController.Heal();
         }
 
-        // Se já houver uma corrotina rodando, para antes de iniciar outra
+        // Garante que a corrotina anterior seja interrompida antes de iniciar uma nova
         if (powerCoroutine != null)
         {
             StopCoroutine(powerCoroutine);
         }
 
-        powerCoroutine = StartCoroutine(PowerDuration(powerUPs[item].durationTime));
+        powerCoroutine = StartCoroutine(powerDuration(powerUPs[item].durationTime));
     }
 
-    private IEnumerator PowerDuration(float duration)
+    private IEnumerator powerDuration(float duration)
     {
         yield return new WaitForSeconds(duration);
         item = -1;
@@ -120,6 +106,6 @@ public class PowerUpsManager : MonoBehaviour
 
     public int getItem()
     {
-        return this.item;
+        return item;
     }
 }
