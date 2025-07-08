@@ -68,34 +68,44 @@ public class PowerUpsManager : MonoBehaviour
         float randomNumber = Random.Range(0, 100);
         int cumulativeChance = 0;
 
-        for (int i = 0; i < powerUPs.Count; i++) // Alterado de .Length para .Count
+        for (int i = 0; i < powerUPs.Count; i++)
         {
             cumulativeChance += powerUPs[i].dropChance;
 
             if (randomNumber < cumulativeChance)
             {
-                applyPowerUp(i);
+                applyPowerUp(0);
+                powerUpsUI.changePowerUP(0);
+                Debug.Log("Alterou o power-Up para: " + i);
                 return;
             }
         }
     }
 
-    private void applyPowerUp(int powerUpIndex)
+    public void applyPowerUp(int powerUpIndex)
     {
         item = powerUpIndex;
 
+        if(item <0)
+        {
+            powerUpsUI.changePowerUP(-1);
+            return;
+        }
+
         if (item == 0)
         {
-            playerController.Heal();
+            playerController.getPotion();
         }
-
-        // Garante que a corrotina anterior seja interrompida antes de iniciar uma nova
-        if (powerCoroutine != null)
+        else
         {
-            StopCoroutine(powerCoroutine);
-        }
+            // Garante que a corrotina anterior seja interrompida antes de iniciar uma nova
+            if (powerCoroutine != null)
+            {
+                StopCoroutine(powerCoroutine);
+            }
 
-        powerCoroutine = StartCoroutine(powerDuration(powerUPs[item].durationTime));
+            powerCoroutine = StartCoroutine(powerDuration(powerUPs[item].durationTime));
+        }
     }
 
     private IEnumerator powerDuration(float duration)

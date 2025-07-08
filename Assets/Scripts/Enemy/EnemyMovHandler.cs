@@ -4,8 +4,18 @@ using UnityEngine;
 
 public class EnemyMovHandler : MonoBehaviour
 {
-    [SerializeField] private Transform player; // Referência ao Transform do jogador
+    private Transform player;
     [SerializeField] private float speed =2f;
+
+    private void Start()
+    {
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+    }
+
 
     // Update is called once per frame
     void Update()

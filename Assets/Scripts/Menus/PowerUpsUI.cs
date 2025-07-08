@@ -8,6 +8,7 @@ public class PowerUpsUI : MonoBehaviour
     [SerializeField] private Image targetImage;
 
     [SerializeField] private Sprite noneSprite;
+    [SerializeField] private Sprite healPotionSprite;
     [SerializeField] private Sprite fastBulletsSprite;
     [SerializeField] private Sprite fireBulletsSprite;
     [SerializeField] private Sprite explosionBulletsSprite;
@@ -15,13 +16,16 @@ public class PowerUpsUI : MonoBehaviour
 
     public void changePowerUP(int code)
     {
-        if (code == -1 || code == 0)
+        if (code == -1)
         {
             targetImage.sprite = noneSprite;
         }
         else
         {
-            if (code == 1)
+            if (code == 0) {
+                targetImage.sprite = healPotionSprite;
+            }
+            else if (code == 1)
             {
                 targetImage.sprite = fastBulletsSprite;
             }

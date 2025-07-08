@@ -11,6 +11,13 @@ public class PlayerInputHandler : MonoBehaviour
     private float moveInputX;
     private float moveInputY;
 
+    private PlayerController controller;
+
+    private void Start()
+    {
+        controller = GetComponent<PlayerController>();
+    }
+
 
     private void Update()
     {
@@ -18,12 +25,18 @@ public class PlayerInputHandler : MonoBehaviour
         {
             weapon.Fire();
         }
+       
     }
 
 
     void FixedUpdate()
     {
         getMovementInput();
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            controller.usePotion();
+        }
 
         // Atualiza a velocidade
         rb.velocity = new Vector2(moveInputX * moveSpeed, moveInputY * moveSpeed);

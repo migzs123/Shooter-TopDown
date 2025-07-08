@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float maxHealth = 10f;
     [SerializeField] private float cureAmmount = 3f;
     private float currentHealth;
+    private bool hasPotion = false;
 
     [Header("Invincibility Frames")]
     [SerializeField] private float invincibilityDuration = 1f; // Duração dos iframes
@@ -17,8 +18,6 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer rend;
     private Color hitColor = Color.red; // Cor de feedback
     private Color originalColor; // Cor original do sprite
-
-    
 
     private PowerUpsManager powerUpsManager;
 
@@ -88,5 +87,23 @@ public class PlayerController : MonoBehaviour
     private void GameOver()
     {
         Debug.Log("Morreu");
+    }
+
+    public bool HasPotion()
+    {
+        return hasPotion;
+    }
+
+    public void getPotion() { 
+        this.hasPotion = true;
+    }
+
+    public void usePotion() {
+        if (hasPotion)
+        {
+            this.Heal();
+            this.hasPotion = false;
+            powerUpsManager.applyPowerUp(-1);
+        }
     }
 }
