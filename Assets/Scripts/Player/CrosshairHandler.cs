@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CrosshairHandler : MonoBehaviour
 {
-    public RectTransform crosshair; // Use um RectTransform para a mira no Canvas
-    public Transform player;
+    [SerializeField] private RectTransform crosshair; // Use um RectTransform para a mira no Canvas
+    [SerializeField] private Transform player;
 
-    public float angle;
+    [HideInInspector] public float angle;
 
     // Start é chamado antes do primeiro frame update
     void Start()

@@ -13,12 +13,16 @@ public class PlayerController : MonoBehaviour
     private bool hasPotion = false;
 
     [Header("Invincibility Frames")]
-    [SerializeField] private float invincibilityDuration = 1f; // Duração dos iframes
+    [SerializeField] private float invincibilityDuration = 0.3f; // Duração dos iframes
     private bool isInvincible = false; // Controla se o jogador está invulnerável
 
     private SpriteRenderer rend;
     private Color hitColor = Color.red; // Cor de feedback
     private Color originalColor; // Cor original do sprite
+
+    [SerializeField] private GameObject weapon;
+    private SpriteRenderer WPrend;
+    private Color WPoriginalColor; // Cor original do sprite
 
     private PowerUpsManager powerUpsManager;
     [SerializeField] private Slider slider;
@@ -33,9 +37,11 @@ public class PlayerController : MonoBehaviour
 
 
         rend = GetComponent<SpriteRenderer>();
-        if (rend != null)
+        WPrend = weapon.GetComponent<SpriteRenderer>();
+        if (rend != null && WPrend != null)
         {
             originalColor = rend.color; // Salva a cor original
+            WPoriginalColor = WPrend.color;
         }
         else
         {
@@ -46,7 +52,7 @@ public class PlayerController : MonoBehaviour
     public void Heal()
     {
 
-        if(currentHealth+ cureAmmount > maxHealth)
+        if (currentHealth + cureAmmount > maxHealth)
         {
             currentHealth = maxHealth;
         }
@@ -54,7 +60,6 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth += cureAmmount;
         }
-        UpdateHealthBar();
         Debug.Log("Vida atual: " + currentHealth);
     }
 
@@ -64,65 +69,29 @@ public class PlayerController : MonoBehaviour
         if (isInvincible) return;
 
         currentHealth -= damage;
-        UpdateHealthBar();
-
+        this.UpdateHealthBar();
         if (currentHealth <= 0)
         {
             GameOver();
         }
         else
         {
-            StartCoroutine(DamageFlashThenInvincibility());
+            StartCoroutine(InvincibilityFrames());
         }
-
         Debug.Log("Vida atual: " + currentHealth);
-    }
-
-    private IEnumerator DamageFlashThenInvincibility()
-    {
-        if (rend == null) yield break;
-
-        // Feedback imediato de dano (flash vermelho)
-        rend.color = hitColor;
-        yield return new WaitForSeconds(0.1f);
-
-        // Volta à cor original antes dos i-frames
-        rend.color = originalColor;
-
-        // Inicia os i-frames
-        StartCoroutine(InvincibilityFrames());
     }
 
     private IEnumerator InvincibilityFrames()
     {
-        if (isInvincible || rend == null) yield break;
+        if (isInvincible) yield break; // Sai imediatamente se já está invencível
+        if (rend == null) yield break;
 
         isInvincible = true;
-
-        float elapsed = 0f;
-        float blinkInterval = 0.3f; 
-
-        while (elapsed < invincibilityDuration)
-        {
-            // Deixa o sprite quase transparente
-            Color transparentColor = rend.color;
-            transparentColor.a = 0.3f;
-            rend.color = transparentColor;
-
-            yield return new WaitForSeconds(blinkInterval);
-
-            // Volta a ser opaco
-            Color opaqueColor = rend.color;
-            opaqueColor.a = 1f;
-            rend.color = opaqueColor;
-
-            yield return new WaitForSeconds(blinkInterval);
-
-            elapsed += blinkInterval * 2;
-        }
-
-        // Restaura a cor original e opacidade total
+        rend.color = (rend.color == originalColor) ? hitColor : originalColor;
+        WPrend.color = (WPrend.color == WPoriginalColor) ? hitColor : WPoriginalColor;
+        yield return new WaitForSeconds(invincibilityDuration);
         rend.color = originalColor;
+        WPrend.color = WPoriginalColor;
         isInvincible = false;
     }
 
@@ -141,11 +110,13 @@ public class PlayerController : MonoBehaviour
         return hasPotion;
     }
 
-    public void getPotion() { 
+    public void getPotion()
+    {
         this.hasPotion = true;
     }
 
-    public void usePotion() {
+    public void usePotion()
+    {
         if (hasPotion)
         {
             this.Heal();
