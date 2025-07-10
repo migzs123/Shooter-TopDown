@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private Color originalColor; // Cor original do sprite
 
     private PowerUpsManager powerUpsManager;
+    [SerializeField] private Slider slider;
 
 
     // Start is called before the first frame update
@@ -60,6 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         
         currentHealth -= damage;
+        this.UpdateHealthBar();
         if (currentHealth <= 0)
         {
             GameOver();
@@ -83,6 +86,10 @@ public class PlayerController : MonoBehaviour
         isInvincible = false;
     }
 
+    private void UpdateHealthBar()
+    {
+        slider.value = currentHealth / maxHealth;
+    }
 
     private void GameOver()
     {

@@ -13,11 +13,6 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] private PowerUpsManager powerUpsManager;
 
-    private void UpdateHealthBar()
-    {
-        slider.value = health / maxHealth;
-    }
-
     public void TakeDamage(float damage){
         if (powerUpsManager.getItem() == 2)
         {
@@ -25,7 +20,6 @@ public class EnemyController : MonoBehaviour
         }
 
         health-= damage;
-        UpdateHealthBar();
         if (health <= 0)
         {
             Destroy(gameObject);
