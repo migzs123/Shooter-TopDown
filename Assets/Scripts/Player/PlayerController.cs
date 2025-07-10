@@ -54,34 +54,74 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth += cureAmmount;
         }
+        UpdateHealthBar();
         Debug.Log("Vida atual: " + currentHealth);
     }
 
     // Update is called once per frame
     public void TakeDamage(float damage)
     {
-        
+        if (isInvincible) return;
+
         currentHealth -= damage;
-        this.UpdateHealthBar();
+        UpdateHealthBar();
+
         if (currentHealth <= 0)
         {
             GameOver();
         }
         else
         {
-            StartCoroutine(InvincibilityFrames());
+            StartCoroutine(DamageFlashThenInvincibility());
         }
+
         Debug.Log("Vida atual: " + currentHealth);
+    }
+
+    private IEnumerator DamageFlashThenInvincibility()
+    {
+        if (rend == null) yield break;
+
+        // Feedback imediato de dano (flash vermelho)
+        rend.color = hitColor;
+        yield return new WaitForSeconds(0.1f);
+
+        // Volta à cor original antes dos i-frames
+        rend.color = originalColor;
+
+        // Inicia os i-frames
+        StartCoroutine(InvincibilityFrames());
     }
 
     private IEnumerator InvincibilityFrames()
     {
-        if (isInvincible) yield break; // Sai imediatamente se já está invencível
-        if (rend == null) yield break;
+        if (isInvincible || rend == null) yield break;
 
         isInvincible = true;
-        rend.color = (rend.color == originalColor) ? hitColor : originalColor;
-        yield return new WaitForSeconds(invincibilityDuration);
+
+        float elapsed = 0f;
+        float blinkInterval = 0.3f; 
+
+        while (elapsed < invincibilityDuration)
+        {
+            // Deixa o sprite quase transparente
+            Color transparentColor = rend.color;
+            transparentColor.a = 0.3f;
+            rend.color = transparentColor;
+
+            yield return new WaitForSeconds(blinkInterval);
+
+            // Volta a ser opaco
+            Color opaqueColor = rend.color;
+            opaqueColor.a = 1f;
+            rend.color = opaqueColor;
+
+            yield return new WaitForSeconds(blinkInterval);
+
+            elapsed += blinkInterval * 2;
+        }
+
+        // Restaura a cor original e opacidade total
         rend.color = originalColor;
         isInvincible = false;
     }

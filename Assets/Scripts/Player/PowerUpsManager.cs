@@ -74,8 +74,8 @@ public class PowerUpsManager : MonoBehaviour
 
             if (randomNumber < cumulativeChance)
             {
-                applyPowerUp(0);
-                powerUpsUI.changePowerUP(0);
+                applyPowerUp(i);
+                powerUpsUI.changePowerUP(i);
                 Debug.Log("Alterou o power-Up para: " + i);
                 return;
             }
