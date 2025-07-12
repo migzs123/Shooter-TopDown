@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false; // Controla se o jogador está invulnerável
 
     private SpriteRenderer rend;
-    private Color hitColor = Color.red; // Cor de feedback
+    private Color hitColor = Color.white; // Cor de feedback
     private Color originalColor; // Cor original do sprite
 
     [SerializeField] private GameObject weapon;

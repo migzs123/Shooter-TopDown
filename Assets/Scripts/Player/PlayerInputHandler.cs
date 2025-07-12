@@ -12,36 +12,37 @@ public class PlayerInputHandler : MonoBehaviour
     private float moveInputY;
 
     private PlayerController controller;
+    private Vector2 moveInput;
 
     private void Start()
     {
         controller = GetComponent<PlayerController>();
     }
 
-
-    private void Update()
+    void Update()
     {
+        getMovementInput();
+
+        // Movimento em vetor normalizado
+        moveInput = new Vector2(moveInputX, moveInputY).normalized;
+
         if (Input.GetMouseButton(0))
         {
             weapon.Fire();
         }
-       
     }
-
 
     void FixedUpdate()
     {
-        getMovementInput();
-
         if (Input.GetKey(KeyCode.E))
         {
             controller.usePotion();
         }
 
-        // Atualiza a velocidade
-        rb.velocity = new Vector2(moveInputX * moveSpeed, moveInputY * moveSpeed);
+        // Usa MovePosition para aplicar movimento com colisão suave
+        Vector2 targetPos = rb.position + moveInput * moveSpeed * Time.fixedDeltaTime;
+        rb.MovePosition(targetPos);
 
-        // Atualiza o angulo
         rb.rotation = crosshair.angle;
     }
 
