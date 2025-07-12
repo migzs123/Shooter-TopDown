@@ -43,7 +43,7 @@ public class PlayerInputHandler : MonoBehaviour
         Vector2 targetPos = rb.position + moveInput * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(targetPos);
 
-        rb.rotation = crosshair.angle;
+        //rb.rotation = crosshair.angle;
     }
 
 

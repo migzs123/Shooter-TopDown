@@ -1,36 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CrosshairHandler : MonoBehaviour
 {
-    [SerializeField] private RectTransform crosshair; // Use um RectTransform para a mira no Canvas
-    [SerializeField] private Transform player;
+    [SerializeField] private RectTransform crosshair;
 
-    [HideInInspector] public float angle;
-
-    // Start é chamado antes do primeiro frame update
     void Start()
     {
         Cursor.visible = false;
+        // Confina o cursor à janela do jogo
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
-    // Update é chamado a cada frame
     void Update()
     {
-        // Obtém a posição do mouse na tela
-        Vector3 mousePosTela = Input.mousePosition;
+        // Mantém a mira seguindo o mouse
+        crosshair.position = Input.mousePosition;
 
-        // Garante que o mouse não saia da tela
-        mousePosTela.x = Mathf.Clamp(mousePosTela.x, 0, Screen.width);
-        mousePosTela.y = Mathf.Clamp(mousePosTela.y, 0, Screen.height);
-
-        // Ajusta a posição do crosshair no espaço da UI
-        crosshair.position = mousePosTela;
-
-        // Calcula o ângulo da mira em relação ao jogador no mundo (opcional, para manter funcionalidade de rotação)
-        Vector3 playerScreenPos = Camera.main.WorldToScreenPoint(player.position);
-        Vector3 direcaoMira = mousePosTela - playerScreenPos;
-        angle = Mathf.Atan2(direcaoMira.y, direcaoMira.x) * Mathf.Rad2Deg - 90f;
+        // Garante que o mouse não escape (backup)
+        if (Cursor.lockState != CursorLockMode.Confined)
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
     }
 }
