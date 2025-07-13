@@ -17,12 +17,9 @@ public class PlayerController : MonoBehaviour
     private bool isInvincible = false; // Controla se o jogador está invulnerável
 
     private SpriteRenderer rend;
-    private Color hitColor = Color.white; // Cor de feedback
-    private Color originalColor; // Cor original do sprite
+    [SerializeField] private Sprite feedbackSprite;
 
     [SerializeField] private GameObject weapon;
-    private SpriteRenderer WPrend;
-    private Color WPoriginalColor; // Cor original do sprite
 
     private PowerUpsManager powerUpsManager;
     [SerializeField] private Slider slider;
@@ -37,16 +34,6 @@ public class PlayerController : MonoBehaviour
 
 
         rend = GetComponent<SpriteRenderer>();
-        WPrend = weapon.GetComponent<SpriteRenderer>();
-        if (rend != null && WPrend != null)
-        {
-            originalColor = rend.color; // Salva a cor original
-            WPoriginalColor = WPrend.color;
-        }
-        else
-        {
-            Debug.LogError("SpriteRenderer não encontrado!");
-        }
     }
 
     public void Heal()
@@ -86,12 +73,12 @@ public class PlayerController : MonoBehaviour
         if (isInvincible) yield break; // Sai imediatamente se já está invencível
         if (rend == null) yield break;
 
+        Sprite originalSprite = rend.sprite;
+
         isInvincible = true;
-        rend.color = (rend.color == originalColor) ? hitColor : originalColor;
-        WPrend.color = (WPrend.color == WPoriginalColor) ? hitColor : WPoriginalColor;
+        rend.sprite = feedbackSprite;
         yield return new WaitForSeconds(invincibilityDuration);
-        rend.color = originalColor;
-        WPrend.color = WPoriginalColor;
+        rend.sprite = originalSprite;
         isInvincible = false;
     }
 
