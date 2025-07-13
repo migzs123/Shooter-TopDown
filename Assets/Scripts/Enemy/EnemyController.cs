@@ -7,7 +7,7 @@ public class EnemyController : MonoBehaviour
 {
 
     [SerializeField] private float maxHealth=4f;
-    [SerializeField] private float health=4f;
+    private float health;
 
     private PowerUpsManager powerUpsManager;
 
@@ -19,7 +19,7 @@ public class EnemyController : MonoBehaviour
 
     void Awake()
     {
-        
+        health = maxHealth;
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
 
         spriteRenderer = GetComponent<SpriteRenderer>();

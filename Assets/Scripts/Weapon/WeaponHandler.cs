@@ -1,10 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-using UnityEngine;
-
-using UnityEngine;
-
 public class WeaponHandler : MonoBehaviour
 {
     [Header("Shooting Settings")]

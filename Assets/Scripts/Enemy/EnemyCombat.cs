@@ -13,16 +13,26 @@ public class EnemyCombat : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
-            ableToHit = true;
+            PlayerController player = collision.GetComponent<PlayerController>();
 
-            if (attackCoroutine == null)
+            if (player != null)
             {
-                attackCoroutine = StartCoroutine(Attack(collision.gameObject.GetComponent<PlayerController>()));
+                ableToHit = true;
+
+                if (attackCoroutine == null)
+                {
+                    attackCoroutine = StartCoroutine(Attack(player));
+                }
+            }
+            else
+            {
+                Debug.LogWarning("PlayerController não encontrado no objeto com tag Player.");
             }
         }
     }
+
 
 
     private void OnTriggerExit2D(Collider2D collision)
