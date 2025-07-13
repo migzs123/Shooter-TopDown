@@ -9,18 +9,26 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private float maxHealth=4f;
     [SerializeField] private float health=4f;
 
-    [SerializeField] private PowerUpsManager powerUpsManager;
+    private PowerUpsManager powerUpsManager;
 
     [Header("Feedback visual")]
-    [SerializeField] private Color flashColor = Color.red;
     [SerializeField] private float flashDuration = 0.1f;
+    [SerializeField] private Sprite feedbackSprite;
 
     private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
+        
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+
         spriteRenderer = GetComponent<SpriteRenderer>();
+        if (playerObject != null)
+        {
+            powerUpsManager = playerObject.GetComponent<PowerUpsManager>();
+        }
     }
+
     public void TakeDamage(float damage)
     {
         if (powerUpsManager.getItem() == 2)
@@ -41,12 +49,12 @@ public class EnemyController : MonoBehaviour
 
     private IEnumerator Flash()
     {
-        Color originalColor = spriteRenderer.color;
-        spriteRenderer.color = flashColor;
+        Sprite normalSprite = spriteRenderer.sprite;
+        spriteRenderer.sprite = feedbackSprite;
 
         yield return new WaitForSeconds(flashDuration);
 
-        spriteRenderer.color = originalColor;
+        spriteRenderer.sprite = normalSprite;
     }
 }
 
