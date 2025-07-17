@@ -66,7 +66,7 @@ public class EnemyMovHandler : MonoBehaviour
 
                 if (currentPathIndex >= currentPath.Count)
                 {
-                    Debug.Log("Inimigo chegou ao final do caminho calculado.");
+                    //Debug.Log("Inimigo chegou ao final do caminho calculado.");
                     currentPath = null; 
                 }
             }
