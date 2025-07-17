@@ -6,6 +6,7 @@ public class EnemyMovHandler : MonoBehaviour
 {
     private Transform player;
     [SerializeField] private float speed =2f;
+    private PathFinder pathFinder;
 
     private void Start()
     {
@@ -14,6 +15,7 @@ public class EnemyMovHandler : MonoBehaviour
         {
             player = playerObject.transform;
         }
+        pathFinder = new PathFinder();
     }
 
 
