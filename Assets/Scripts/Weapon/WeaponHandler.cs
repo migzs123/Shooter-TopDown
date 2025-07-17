@@ -10,6 +10,7 @@ public class WeaponHandler : MonoBehaviour
     private float baseCooldownTime = 0.5f;
     private float cooldownTime;
     private bool canFire = true;
+    public Transform bulletParent;
 
     [Header("Orbit Settings")]
     [SerializeField] private float orbitDistance = 0.7f;
@@ -109,7 +110,7 @@ public class WeaponHandler : MonoBehaviour
     {
         if (!canFire) return;
 
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation, bulletParent);
 
         // Aplica efeitos de power-up
         if (powerUpsManager != null && powerUpsManager.getItem() == 3)

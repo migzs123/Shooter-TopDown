@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
         {
             currentHealth += cureAmmount;
         }
+
+        UpdateHealthBar();
         Debug.Log("Vida atual: " + currentHealth);
     }
 
