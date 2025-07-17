@@ -304,7 +304,7 @@ MonoBehaviour:
   rb: {fileID: 170424540}
   crosshair: {fileID: 170424541}
   weapon: {fileID: 600363188}
-  moveSpeed: 5
+  moveSpeed: 4
 --- !u!61 &170424539
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -465,13 +465,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6041181342626658674, guid: dcb30e50a65def544b90c9174fb80656, type: 3}
+      propertyPath: speed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6041181342626658674, guid: dcb30e50a65def544b90c9174fb80656, type: 3}
+      propertyPath: gridManager
+      value: 
+      objectReference: {fileID: 702382042}
+    - target: {fileID: 6041181342626658674, guid: dcb30e50a65def544b90c9174fb80656, type: 3}
+      propertyPath: pathUpdateInterval
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 6629615572219922606, guid: dcb30e50a65def544b90c9174fb80656, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -15.607939
+      value: 1.28
       objectReference: {fileID: 0}
     - target: {fileID: 6629615572219922606, guid: dcb30e50a65def544b90c9174fb80656, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.5757914
+      value: 5.08
       objectReference: {fileID: 0}
     - target: {fileID: 6629615572219922606, guid: dcb30e50a65def544b90c9174fb80656, type: 3}
       propertyPath: m_LocalPosition.z
@@ -504,6 +516,10 @@ PrefabInstance:
     - target: {fileID: 6629615572219922606, guid: dcb30e50a65def544b90c9174fb80656, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7676078336421348093, guid: dcb30e50a65def544b90c9174fb80656, type: 3}
+      propertyPath: flashDuration
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -57003,7 +57019,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652306790}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 026890c965f81104da50acf38bd4114d, type: 3}
   m_Name: 

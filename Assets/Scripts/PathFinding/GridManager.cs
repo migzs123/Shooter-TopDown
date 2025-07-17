@@ -79,6 +79,23 @@ public class GridManager : MonoBehaviour
 
         return neighbors;
     }
+
+    public void ResetAllNodes()
+    {
+        if (grid == null) return; 
+
+        for (int x = 0; x < width; x++)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                if (grid[x, y] != null)
+                {
+                    grid[x, y].reset(); 
+                }
+            }
+        }
+    }
+
     public Node nodeFromWorldPosition(Vector2 worldPos)
     {
         Vector3Int cell = groundTilemap.WorldToCell(worldPos);
