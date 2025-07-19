@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
@@ -9,6 +10,8 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private Transform enemiesParent;
     private float timer = 0f;
     [SerializeField] private float gap = 5f;
+    [SerializeField] private int maxEnemies = 50;
+    private int count = 0;
 
     [Header("Debug")]
     [SerializeField] private Color gizmoColor = Color.blue;
@@ -53,7 +56,11 @@ public class EnemySpawner : MonoBehaviour
                 );
 
                 Vector3 spawnPosition = position + offset;
-                Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, enemiesParent);
+                if (count <= maxEnemies)
+                {
+                    Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, enemiesParent);
+                    count++;
+                }
             }
         }
     }
@@ -64,6 +71,11 @@ public class EnemySpawner : MonoBehaviour
         {
             this.SpawnEnemy(Random.Range(1, 4), new Vector2(spawnPoint.position.x, spawnPoint.position.y));
         }
+    }
+
+    public void KillEnemy()
+    {
+        count--;
     }
 
     private void OnDrawGizmos()

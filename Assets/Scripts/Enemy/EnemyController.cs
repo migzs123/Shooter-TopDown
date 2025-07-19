@@ -16,11 +16,13 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Sprite feedbackSprite;
 
     private SpriteRenderer spriteRenderer;
+    private EnemySpawner enemySpawner;
 
     void Awake()
     {
         health = maxHealth;
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        EnemySpawner enemySpawner = GameObject.Find("EnemySpawners").GetComponent<EnemySpawner>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (playerObject != null)
@@ -44,6 +46,9 @@ public class EnemyController : MonoBehaviour
         if (health <= 0)
         {
             Destroy(gameObject);
+            if (enemySpawner != null) {
+                enemySpawner.KillEnemy();
+            }
         }
     }
 
