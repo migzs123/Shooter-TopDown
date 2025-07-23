@@ -22,10 +22,13 @@ public class WeaponHandler : MonoBehaviour
     [Header("Power Ups")]
     public PowerUpsManager powerUpsManager;
 
+    private WeaponSounds weaponSounds;
+
     private void Start()
     {
         mainCam = Camera.main;
         cooldownTime = baseCooldownTime;
+        weaponSounds = gameObject.GetComponent<WeaponSounds>();
 
         if (powerUpsManager == null)
         {
