@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
     {
         health = maxHealth;
         GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-        EnemySpawner enemySpawner = GameObject.Find("EnemySpawners").GetComponent<EnemySpawner>();
+        enemySpawner = GameObject.Find("EnemySpawners").GetComponent<EnemySpawner>();
 
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (playerObject != null)

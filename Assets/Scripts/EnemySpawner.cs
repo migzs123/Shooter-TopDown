@@ -56,7 +56,7 @@ public class EnemySpawner : MonoBehaviour
                 );
 
                 Vector3 spawnPosition = position + offset;
-                if (count <= maxEnemies)
+                if (count < maxEnemies)
                 {
                     Instantiate(enemyPrefab, spawnPosition, Quaternion.identity, enemiesParent);
                     count++;
@@ -75,7 +75,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void KillEnemy()
     {
-        count--;
+        count--;   
     }
 
     private void OnDrawGizmos()

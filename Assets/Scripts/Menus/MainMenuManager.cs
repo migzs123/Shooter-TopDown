@@ -7,7 +7,12 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private string levelName;
 
-   public void Play()
+    public void Start()
+    {
+        Cursor.visible = true;
+    }
+
+    public void Play()
     {
         SceneManager.LoadScene(levelName);
     }
